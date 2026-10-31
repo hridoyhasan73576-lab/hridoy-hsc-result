@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b75">
+<title>Hridoy HSC Result Portal</title>
+<style>
+:root{--navy:#123b75;--blue:#1769d2;--bg:#f3f7fc;--ink:#17243a}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,"Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(120deg,#102e5b,#1769d2);color:white;padding:28px 18px 48px;text-align:center}
+header h1{margin:0;font-size:clamp(25px,5vw,38px)}header p{margin:8px 0 0;color:#e2edff}
+main{max-width:760px;margin:-25px auto 40px;padding:0 14px}
+.card{background:white;border-radius:18px;padding:22px;box-shadow:0 12px 35px #17345b18}
+h2{margin:0 0 6px;font-size:22px}.sub{color:#65738a;margin:0 0 20px;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:block;font-weight:650;font-size:14px;margin-bottom:6px}
+input,select{width:100%;padding:13px;border:1px solid #d4deeb;border-radius:10px;font:inherit;background:white;color:var(--ink)}
+input:focus,select:focus{outline:2px solid #8abaff;border-color:var(--blue)}
+.full{grid-column:1/-1}
+button,.linkbtn{display:inline-flex;justify-content:center;align-items:center;width:100%;padding:14px;border:0;border-radius:11px;background:var(--blue);color:white;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer}
+button:hover,.linkbtn:hover{background:#0e54ae}
+.note{margin-top:18px;padding:14px;border-radius:12px;background:#eef5ff;color:#294568;font-size:14px;line-height:1.55}
+.notice{margin-top:14px;color:#7b4b00;background:#fff7e6;padding:13px;border-radius:10px;font-size:13px;line-height:1.5}
+footer{text-align:center;color:#718096;font-size:13px;padding:0 16px 30px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.card{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Hridoy HSC Result Portal</h1>
+  <p>বাংলাদেশের HSC ও সমমান পরীক্ষার ফলাফল খুঁজুন</p>
+</header>
+<main>
+<section class="card">
+  <h2>রেজাল্ট খুঁজুন</h2>
+  <p class="sub">পরীক্ষার তথ্য দিন, তারপর সরকারি ফলাফল পোর্টালে যান।</p>
+  <form id="resultForm" class="grid">
+    <div>
+      <label for="exam">পরীক্ষা</label>
+      <select id="exam"><option>HSC/Alim/Equivalent</option></select>
+    </div>
+    <div>
+      <label for="year">পরীক্ষার বছর</label>
+      <select id="year"></select>
+    </div>
+    <div>
+      <label for="board">শিক্ষা বোর্ড</label>
+      <select id="board">
+        <option value="">বোর্ড নির্বাচন করুন</option>
+        <option>Barisal</option><option>Chittagong</option><option>Comilla</option>
+        <option>Dhaka</option><option>Dinajpur</option><option>Jessore</option>
+        <option>Mymensingh</option><option>Rajshahi</option><option>Sylhet</option>
+        <option>Madrasah</option><option>Technical</option>
+      </select>
+    </div>
+    <div>
+      <label for="roll">রোল নম্বর</label>
+      <input id="roll" inputmode="numeric" autocomplete="off" placeholder="যেমন: 608395" required>
+    </div>
+    <div class="full">
+      <label for="reg">রেজিস্ট্রেশন নম্বর</label>
+      <input id="reg" inputmode="numeric" autocomplete="off" placeholder="রেজিস্ট্রেশন নম্বর লিখুন" required>
+    </div>
+    <div class="full"><button type="submit">সরকারি পোর্টালে রেজাল্ট দেখুন ↗</button></div>
+  </form>
+  <div class="note">
+    <strong>কীভাবে ফলাফল দেখবেন?</strong><br>
+    বোর্ডের সরকারি পোর্টালে গিয়ে পরীক্ষার ধরন, বছর, বোর্ড, রোল ও রেজিস্ট্রেশন দিন। সাইটে CAPTCHA চাইলে সেটি নিজে পূরণ করে View Result চাপুন।
+  </div>
+  <div class="notice">
+    গুরুত্বপূর্ণ: শিক্ষা বোর্ডের সরকারি সাইট CAPTCHA/নিরাপত্তা যাচাই ব্যবহার করে। এই ফ্রি ওয়েবসাইট নিজে সরকারি ডেটাবেসে প্রবেশ করে না বা CAPTCHA পাশ কাটায় না। তাই ফলাফল সরকারি পোর্টালেই যাচাই হবে। কোনো অনুমোদিত API পাওয়া গেলে পরে সরাসরি ফলাফল দেখানোর ব্যবস্থা যুক্ত করা যাবে।
+  </div>
+</section>
+</main>
+<footer>Hridoy HSC Result Portal · Unofficial helper website · Result data is provided by the relevant education board.</footer>
+<script>
+const year=document.getElementById('year');
+for(let y=2026;y>=2010;y--){const o=document.createElement('option');o.value=y;o.textContent=y;if(y===2026)o.selected=true;year.appendChild(o);}
+document.getElementById('resultForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const board=document.getElementById('board').value;
+  const roll=document.getElementById('roll').value.trim();
+  const reg=document.getElementById('reg').value.trim();
+  if(!board){alert('অনুগ্রহ করে শিক্ষা বোর্ড নির্বাচন করুন।');return;}
+  if(!/^[0-9]+$/.test(roll)||!/^[0-9]+$/.test(reg)){alert('রোল ও রেজিস্ট্রেশন নম্বর শুধু সংখ্যা দিয়ে লিখুন।');return;}
+  // Official portal requires the user to complete its own form and CAPTCHA.
+  window.open('https://educationboardresults.gov.bd/v2/home','_blank','noopener');
+});
+</script>
+</body>
+</html>
